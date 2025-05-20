@@ -1,0 +1,40 @@
+---
+source: tests/error_cases.rs
+expression: error_json
+---
+[
+  {
+    "severity": "Error",
+    "code": null,
+    "message": "unterminated string",
+    "labels": [
+      {
+        "style": "Primary",
+        "file_id": null,
+        "range": {
+          "start": 0,
+          "end": 12
+        },
+        "message": ""
+      }
+    ],
+    "notes": []
+  },
+  {
+    "severity": "Error",
+    "code": null,
+    "message": "invalid syntax, expected one of: '\\', ':', 'false', '{', '[', '(', '#{', 'nil', <number>, <string>, 'true'",
+    "labels": [
+      {
+        "style": "Primary",
+        "file_id": null,
+        "range": {
+          "start": 12,
+          "end": 12
+        },
+        "message": ""
+      }
+    ],
+    "notes": []
+  }
+]

@@ -1,0 +1,22 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"(1 nil true -4.2 \\\"hello world\\\")\").unwrap().cst"
+---
+edn [0..31]
+    list [0..31]
+        LParen "(" [0..1]
+        literal [1..2]
+            Number "1" [1..2]
+        Whitespace " " [2..3]
+        literal [3..6]
+            Null "nil" [3..6]
+        Whitespace " " [6..7]
+        literal [7..11]
+            True "true" [7..11]
+        Whitespace " " [11..12]
+        literal [12..16]
+            Number "-4.2" [12..16]
+        Whitespace " " [16..17]
+        literal [17..30]
+            String "\"hello world\"" [17..30]
+        RParen ")" [30..31]

@@ -1,0 +1,11 @@
+[ :key 
+ "a" 
+ 3 
+ \s 
+ nil, 2.3 
+ (1 2 3) 
+ #{1 2 3} 
+ {
+  :another-key_word  \newline 
+ }
+]

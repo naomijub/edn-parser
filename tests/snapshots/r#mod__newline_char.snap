@@ -1,0 +1,9 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"\\\\newline\").unwrap().cst"
+---
+edn [0..8]
+    literal [0..8]
+        char [0..8]
+            CharEscape "\\" [0..1]
+            Name "newline" [1..8]

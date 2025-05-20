@@ -1,0 +1,36 @@
+token True='true' False='false' Null='nil' CharEscape='\\';
+token LSetBrace='#{' LBrace='{' RBrace='}' LBrak='[' RBrak=']' LParen='(' RParen=')' Comma=',' Colon=':' Hash='#';
+token String='<string>' Number='<number>' Name='<name>';
+token Whitespace Newline;
+
+skip Whitespace Newline;
+
+start edn;
+
+edn: value;
+value^:
+  map
+| vector
+| list
+| set
+| literal
+;
+
+set: '#{' [value ([','] value)*] '}';
+map: '{' [member ([','] member)*] '}';
+vector: '[' [value ([','] value)*] ']';
+list: '(' [value ([','] value)*] ')';
+member: value value;
+
+keyword: ':' Name;
+char: '\\' Name;
+
+literal:
+  String
+| Number
+| char
+| keyword
+| 'true'
+| 'false'
+| 'nil'
+;

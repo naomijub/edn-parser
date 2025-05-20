@@ -1,0 +1,7 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"false\").unwrap().cst"
+---
+edn [0..5]
+    literal [0..5]
+        False "false" [0..5]

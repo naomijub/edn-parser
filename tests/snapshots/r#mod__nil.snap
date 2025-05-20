@@ -1,0 +1,7 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"nil\").unwrap().cst"
+---
+edn [0..3]
+    literal [0..3]
+        Null "nil" [0..3]

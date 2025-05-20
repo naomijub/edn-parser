@@ -1,0 +1,22 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"#{1 nil true -4.2 \\\"hello world\\\"}\").unwrap().cst"
+---
+edn [0..32]
+    set [0..32]
+        LSetBrace "#{" [0..2]
+        literal [2..3]
+            Number "1" [2..3]
+        Whitespace " " [3..4]
+        literal [4..7]
+            Null "nil" [4..7]
+        Whitespace " " [7..8]
+        literal [8..12]
+            True "true" [8..12]
+        Whitespace " " [12..13]
+        literal [13..17]
+            Number "-4.2" [13..17]
+        Whitespace " " [17..18]
+        literal [18..31]
+            String "\"hello world\"" [18..31]
+        RBrace "}" [31..32]

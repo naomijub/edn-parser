@@ -1,0 +1,7 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"\\\"hello world\\\"\").unwrap().cst"
+---
+edn [0..13]
+    literal [0..13]
+        String "\"hello world\"" [0..13]
