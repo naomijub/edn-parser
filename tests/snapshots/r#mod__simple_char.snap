@@ -3,7 +3,7 @@ source: tests/mod.rs
 expression: "edn_parse(\"\\\\c\").unwrap().cst"
 ---
 edn [0..2]
-    literal [0..2]
+    composed [0..2]
         char [0..2]
             CharEscape "\\" [0..1]
-            Name "c" [1..2]
+            Chars "c" [1..2]

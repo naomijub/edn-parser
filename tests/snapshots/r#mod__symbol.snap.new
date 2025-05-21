@@ -1,0 +1,9 @@
+---
+source: tests/mod.rs
+assertion_line: 126
+expression: "edn_parse(\"this_is-a_symbol\").unwrap().cst"
+---
+edn [0..16]
+    composed [0..16]
+        symbol [0..16]
+            Name "this_is-a_symbol" [0..16]

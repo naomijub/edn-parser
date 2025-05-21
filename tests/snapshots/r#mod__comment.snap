@@ -1,0 +1,17 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"\n    ; this is a comment\n    123\n    ; this is a long ass comment that has numbers 12345678901234567890 and stuff !@#$%^&*()\n    \").unwrap().cst"
+---
+edn [0..129]
+    Newline "\n" [0..1]
+    Whitespace "    " [1..5]
+    Comment "; this is a comment" [5..24]
+    Newline "\n" [24..25]
+    Whitespace "    " [25..29]
+    literal [29..32]
+        Number "123" [29..32]
+    Newline "\n" [32..33]
+    Whitespace "    " [33..37]
+    Comment "; this is a long ass comment that has numbers 12345678901234567890 and stuff !@#$%^&*()" [37..124]
+    Newline "\n" [124..125]
+    Whitespace "    " [125..129]

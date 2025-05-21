@@ -4,6 +4,7 @@ use edn_parser::*;
 use insta::assert_snapshot;
 
 mod error_cases;
+mod special_chars;
 
 #[test]
 fn int() {
@@ -77,4 +78,56 @@ fn map_random_types() {
             .unwrap()
             .cst
     );
+}
+
+#[test]
+fn uuid() {
+    assert_snapshot!(
+        edn_parse("#uuid \"4877284c-1661-4efe-be83-57d9366700a8\"")
+            .unwrap()
+            .cst
+    );
+}
+
+#[test]
+fn inst_z() {
+    assert_snapshot!(edn_parse("#inst \"1985-04-12T23:20:50.52Z\"").unwrap().cst);
+}
+
+#[test]
+fn inst_plus_zpne() {
+    assert_snapshot!(
+        edn_parse("#inst \"1985-04-12T23:20:50+00:00\"")
+            .unwrap()
+            .cst
+    );
+}
+
+#[test]
+fn inst_sub_zpne() {
+    assert_snapshot!(
+        edn_parse("#inst \"1985-04-12T23:20:50-00:00\"")
+            .unwrap()
+            .cst
+    );
+}
+
+#[test]
+fn comment() {
+    assert_snapshot!(
+        edn_parse(
+            "
+    ; this is a comment
+    123
+    ; this is a long ass comment that has numbers 12345678901234567890 and stuff !@#$%^&*()
+    "
+        )
+        .unwrap()
+        .cst
+    );
+}
+
+#[test]
+fn symbol() {
+    assert_snapshot!(edn_parse("this_is-a_symbol").unwrap().cst);
 }

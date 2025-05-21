@@ -22,7 +22,7 @@ impl LexerError {
     }
 }
 
-#[allow(clippy::upper_case_acronyms)]
+#[allow(clippy::upper_case_acronyms, missing_docs)]
 #[derive(Logos, Debug, PartialEq, Eq, Copy, Clone)]
 #[logos(error = LexerError)]
 pub enum Token {
@@ -33,8 +33,14 @@ pub enum Token {
     False,
     #[token("nil")]
     Null,
+    #[token("#inst")]
+    Inst,
+    #[token("#uuid")]
+    Uuid,
     #[token("\\")]
     CharEscape,
+    #[token("/")]
+    Slash,
     #[token("#{")]
     LSetBrace,
     #[token("{")]
@@ -55,16 +61,26 @@ pub enum Token {
     Colon,
     #[token("#")]
     Hash,
+    #[regex("[A-Za-z0-9-_]+", priority = 0)]
+    Name,
     #[regex("\"", parse_string)]
     String,
+    #[regex("([A-Za-z]{1}|[uU][0-9a-fA-F]{4}|newline|return|space|tab)")]
+    Chars,
     #[regex(r"-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?")]
     Number,
-    #[regex("[A-Za-z0-9_-]+", priority = 0)]
-    Name,
+    #[regex(
+        "\"([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2})((.[0-9]+)?Z|[+-][0-9]{2}:[0-9]{2})\""
+    )]
+    Timestamp,
+    #[regex("\"[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}\"")]
+    Id,
     #[regex("[\u{0020}\u{0009}]+")]
     Whitespace,
     #[regex("\r?\n")]
     Newline,
+    #[regex("[;]+[\x09\x20-\x7E\u{0080}-\u{D7FF}\u{E000}-\u{10FFFF}]*")]
+    Comment,
     Error,
 }
 
@@ -89,6 +105,7 @@ fn parse_string(lexer: &mut Lexer<'_, Token>) -> Result<(), LexerError> {
     }
     Err(LexerError::UnterminatedString)
 }
+
 fn check_string(value: &str, span: &Span, diags: &mut Vec<Diagnostic>) {
     let mut it = value.chars().enumerate();
     while let Some((i, c)) = it.next() {

@@ -1,0 +1,10 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"#uuid \\\"4877284c-1661-4efe-be83-57d9366700a8\\\"\").unwrap().cst"
+---
+edn [0..44]
+    composed [0..44]
+        uuid [0..44]
+            Uuid "#uuid" [0..5]
+            Whitespace " " [5..6]
+            Id "\"4877284c-1661-4efe-be83-57d9366700a8\"" [6..44]

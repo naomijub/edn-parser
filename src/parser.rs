@@ -1,3 +1,4 @@
+#![allow(clippy::all, clippy::nursery, clippy::pedantic, missing_docs)]
 use super::lexer::{Token, tokenize};
 use codespan_reporting::diagnostic::Label;
 use serde::Serialize;

@@ -1,0 +1,9 @@
+---
+source: tests/special_chars.rs
+expression: "edn_parse(\"\\\\return\").unwrap().cst"
+---
+edn [0..7]
+    literal [0..7]
+        char [0..7]
+            CharEscape "\\" [0..1]
+            Chars "return" [1..7]

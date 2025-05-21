@@ -1,0 +1,10 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"#inst \\\"1985-04-12T23:20:50-00:00\\\"\").unwrap().cst"
+---
+edn [0..33]
+    composed [0..33]
+        inst [0..33]
+            Inst "#inst" [0..5]
+            Whitespace " " [5..6]
+            Timestamp "\"1985-04-12T23:20:50-00:00\"" [6..33]

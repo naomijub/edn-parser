@@ -23,7 +23,7 @@ expression: error_json
   {
     "severity": "Error",
     "code": null,
-    "message": "invalid syntax, expected one of: '\\', ':', 'false', '{', '[', '(', '#{', 'nil', <number>, <string>, 'true'",
+    "message": "invalid syntax, expected one of: '\\', ':', 'false', '#inst', '{', '[', '(', '#{', <symbol>, 'nil', <number>, <string>, 'true', '#uuid'",
     "labels": [
       {
         "style": "Primary",

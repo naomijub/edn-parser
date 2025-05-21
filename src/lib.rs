@@ -15,7 +15,8 @@ use codespan_reporting::term::{self, Config};
 use parser::*;
 
 pub use codespan_reporting::diagnostic::Diagnostic;
-pub use parser::Cst;
+pub use lexer::Token;
+pub use parser::{Cst, CstChildren, Node, NodeRef, Rule, Span};
 
 /// Generates the syntax tree (CST) for the given EDN source string and returns it as a vector of strings.
 ///

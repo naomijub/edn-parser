@@ -1,9 +1,10 @@
 token True='true' False='false' Null='nil' CharEscape='\\';
-token LSetBrace='#{' LBrace='{' RBrace='}' LBrak='[' RBrak=']' LParen='(' RParen=')' Comma=',' Colon=':' Hash='#';
-token String='<string>' Number='<number>' Name='<name>';
-token Whitespace Newline;
+token LSetBrace='#{' LBrace='{' RBrace='}' LBrak='[' RBrak=']' LParen='(' RParen=')' Comma=',' Colon=':' Hash='#' Slash='/';
+token String='<string>' Number='<number>' Name='<symbol>' Chars='<chars>';
+token Inst='#inst' Uuid='#uuid' Timestamp='<timestamp>' Id='<id>';
+token Whitespace Newline Comment;
 
-skip Whitespace Newline;
+skip Whitespace Newline Comment;
 
 start edn;
 
@@ -14,6 +15,7 @@ value^:
 | list
 | set
 | literal
+| composed
 ;
 
 set: '#{' [value ([','] value)*] '}';
@@ -22,14 +24,23 @@ vector: '[' [value ([','] value)*] ']';
 list: '(' [value ([','] value)*] ')';
 member: value value;
 
-keyword: ':' Name;
-char: '\\' Name;
+inst: Inst Timestamp;
+uuid: Uuid Id;
+keyword: ':' Name ['/' Name];
+char: '\\' Chars;
+symbol: Name;
+
+composed:
+  keyword
+| symbol
+| char
+| inst
+| uuid
+;
 
 literal:
   String
 | Number
-| char
-| keyword
 | 'true'
 | 'false'
 | 'nil'
