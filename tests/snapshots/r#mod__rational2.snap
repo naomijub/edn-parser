@@ -1,0 +1,7 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"42/3\").unwrap().cst"
+---
+edn [0..4]
+    literal [0..4]
+        Rational "42/3" [0..4]

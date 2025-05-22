@@ -1,5 +1,5 @@
 ---
-source: tests/special_chars.rs
+source: tests/error_cases.rs
 expression: error_json
 ---
 [
@@ -12,8 +12,8 @@ expression: error_json
         "style": "Primary",
         "file_id": null,
         "range": {
-          "start": 6,
-          "end": 7
+          "start": 4,
+          "end": 5
         },
         "message": ""
       }

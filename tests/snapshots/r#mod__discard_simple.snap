@@ -1,0 +1,8 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"#_nil \").unwrap().cst"
+---
+edn [0..6]
+    composed [0..5]
+        Discard "#_nil" [0..5]
+    Whitespace " " [5..6]

@@ -1,10 +1,10 @@
-token True='true' False='false' Null='nil' CharEscape='\\';
+token True='true' False='false' Null='nil' CharEscape='\\' Discard='<discard>';
 token LSetBrace='#{' LBrace='{' RBrace='}' LBrak='[' RBrak=']' LParen='(' RParen=')' Comma=',' Colon=':' Hash='#' Slash='/';
-token String='<string>' Number='<number>' Name='<symbol>' Chars='<chars>';
+token String='<string>' Number='<number>' Name='<symbol>' Chars='<chars>' Rational='<rational>';
 token Inst='#inst' Uuid='#uuid' Timestamp='<timestamp>' Id='<id>';
 token Whitespace Newline Comment;
 
-skip Whitespace Newline Comment;
+skip Whitespace Newline Comment Comma;
 
 start edn;
 
@@ -18,29 +18,37 @@ value^:
 | composed
 ;
 
-set: '#{' [value ([','] value)*] '}';
-map: '{' [member ([','] member)*] '}';
-vector: '[' [value ([','] value)*] ']';
-list: '(' [value ([','] value)*] ')';
+tagged: '#' Name;
+
+tagged_set: tagged set;
+tagged_map: tagged map;
+tagged_vector: tagged vector;
+tagged_list: tagged list;
+set: '#{' [value (value)*] '}';
+map: '{' [member (member)*] '}';
+vector: '[' [value (value)*] ']';
+list: '(' [value (value)*] ')';
 member: value value;
 
 inst: Inst Timestamp;
 uuid: Uuid Id;
-keyword: ':' Name ['/' Name];
-char: '\\' Chars;
+keyword: ':' Name;
 symbol: Name;
 
 composed:
   keyword
 | symbol
-| char
+| tagged
 | inst
 | uuid
+| Discard
 ;
 
 literal:
   String
 | Number
+| Rational
+| Chars
 | 'true'
 | 'false'
 | 'nil'

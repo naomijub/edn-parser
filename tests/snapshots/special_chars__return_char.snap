@@ -4,6 +4,4 @@ expression: "edn_parse(\"\\\\return\").unwrap().cst"
 ---
 edn [0..7]
     literal [0..7]
-        char [0..7]
-            CharEscape "\\" [0..1]
-            Chars "return" [1..7]
+        Chars "\\return" [0..7]

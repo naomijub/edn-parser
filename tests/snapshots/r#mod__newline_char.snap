@@ -3,7 +3,5 @@ source: tests/mod.rs
 expression: "edn_parse(\"\\\\newline\").unwrap().cst"
 ---
 edn [0..8]
-    composed [0..8]
-        char [0..8]
-            CharEscape "\\" [0..1]
-            Chars "newline" [1..8]
+    literal [0..8]
+        Chars "\\newline" [0..8]

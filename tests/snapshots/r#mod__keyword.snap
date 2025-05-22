@@ -1,0 +1,9 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\":this_is-a_keyword?!.*+\").unwrap().cst"
+---
+edn [0..23]
+    composed [0..23]
+        keyword [0..23]
+            Colon ":" [0..1]
+            Name "this_is-a_keyword?!.*+" [1..23]

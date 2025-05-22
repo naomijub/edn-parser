@@ -6,13 +6,13 @@ expression: error_json
   {
     "severity": "Error",
     "code": null,
-    "message": "invalid syntax, expected: <chars>",
+    "message": "invalid syntax, expected: <end of file>",
     "labels": [
       {
         "style": "Primary",
         "file_id": null,
         "range": {
-          "start": 1,
+          "start": 2,
           "end": 7
         },
         "message": ""

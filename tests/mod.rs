@@ -27,6 +27,16 @@ fn neg_float() {
 }
 
 #[test]
+fn rational() {
+    assert_snapshot!(edn_parse("42/12").unwrap().cst);
+}
+
+#[test]
+fn rational2() {
+    assert_snapshot!(edn_parse("42/3").unwrap().cst);
+}
+
+#[test]
 fn bool_true() {
     assert_snapshot!(edn_parse("true").unwrap().cst);
 }
@@ -130,4 +140,34 @@ fn comment() {
 #[test]
 fn symbol() {
     assert_snapshot!(edn_parse("this_is-a_symbol").unwrap().cst);
+}
+
+#[test]
+fn keyword() {
+    assert_snapshot!(edn_parse(":this_is-a_keyword?!.*+").unwrap().cst);
+}
+
+#[test]
+fn single_keyword() {
+    assert_snapshot!(edn_parse(":b").unwrap().cst);
+}
+
+#[test]
+fn namespace_keyword() {
+    assert_snapshot!(edn_parse(":namespace/key").unwrap().cst);
+}
+
+#[test]
+fn discard_vector_elements() {
+    assert_snapshot!(edn_parse("[1 #_nil true #_-4.2 #_\\c #_\"hello\" \"hello world\"]").unwrap().cst);
+}
+
+#[test]
+fn discard_simple() {
+    assert_snapshot!(edn_parse("#_nil ").unwrap().cst);
+}
+
+#[test]
+fn tagged_collection() {
+    assert_snapshot!(edn_parse("#domain/model").unwrap().cst);
 }

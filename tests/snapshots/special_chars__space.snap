@@ -4,6 +4,4 @@ expression: "edn_parse(\"\\\\space\").unwrap().cst"
 ---
 edn [0..6]
     literal [0..6]
-        char [0..6]
-            CharEscape "\\" [0..1]
-            Chars "space" [1..6]
+        Chars "\\space" [0..6]

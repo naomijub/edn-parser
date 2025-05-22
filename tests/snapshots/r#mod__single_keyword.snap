@@ -1,0 +1,9 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\":b\").unwrap().cst"
+---
+edn [0..2]
+    composed [0..2]
+        keyword [0..2]
+            Colon ":" [0..1]
+            Name "b" [1..2]

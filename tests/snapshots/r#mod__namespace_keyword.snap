@@ -1,0 +1,9 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\":namespace/key\").unwrap().cst"
+---
+edn [0..14]
+    composed [0..14]
+        keyword [0..14]
+            Colon ":" [0..1]
+            Name "namespace/key" [1..14]

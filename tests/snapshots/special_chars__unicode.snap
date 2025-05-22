@@ -4,6 +4,4 @@ expression: "edn_parse(\"\\\\u0000\").unwrap().cst"
 ---
 edn [0..6]
     literal [0..6]
-        char [0..6]
-            CharEscape "\\" [0..1]
-            Chars "u0000" [1..6]
+        Chars "\\u0000" [0..6]

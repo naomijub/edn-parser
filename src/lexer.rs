@@ -7,17 +7,25 @@ pub enum LexerError {
     #[default]
     Invalid,
     UnterminatedString,
+    InvalidSymbolFirstCharacter(char),
+    UnterminatedDiscard,
 }
 
 impl LexerError {
     pub fn into_diagnostic(self, span: Span) -> Diagnostic {
         match self {
             Self::Invalid => Diagnostic::error()
-                .with_message("invalid token")
-                .with_labels(vec![Label::primary((), span)]),
+                        .with_message("invalid token")
+                        .with_labels(vec![Label::primary((), span)]),
             Self::UnterminatedString => Diagnostic::error()
-                .with_message("unterminated string")
-                .with_labels(vec![Label::primary((), span)]),
+                        .with_message("unterminated string")
+                        .with_labels(vec![Label::primary((), span)]),
+            Self::InvalidSymbolFirstCharacter(c) => Diagnostic::error()
+                        .with_message(format!("invalid symbol/keyword first character: {c}"))
+                        .with_labels(vec![Label::primary((), span)]),
+            Self::UnterminatedDiscard => Diagnostic::error()
+                        .with_message("unterminated discard sequence")
+                        .with_labels(vec![Label::primary((), span)]),
         }
     }
 }
@@ -61,14 +69,16 @@ pub enum Token {
     Colon,
     #[token("#")]
     Hash,
-    #[regex("[A-Za-z0-9-_]+", priority = 0)]
+    #[regex("[\\+\\-\\.]?[A-Za-z]{1}[A-Za-z0-9-_\\?\\!\\.\\*\\+\\/]+|[\\+\\-\\.]|[^0-9]", priority = 0,)]
     Name,
     #[regex("\"", parse_string)]
     String,
-    #[regex("([A-Za-z]{1}|[uU][0-9a-fA-F]{4}|newline|return|space|tab)")]
+    #[regex("\\\\([A-Za-z]{1}|[uU][0-9a-fA-F]{4}|newline|return|space|tab)")]
     Chars,
     #[regex(r"-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?")]
     Number,
+    #[regex(r"-?(0|[1-9][0-9]*)\/([1-9][0-9]*)")]
+    Rational,
     #[regex(
         "\"([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2})((.[0-9]+)?Z|[+-][0-9]{2}:[0-9]{2})\""
     )]
@@ -81,8 +91,13 @@ pub enum Token {
     Newline,
     #[regex("[;]+[\x09\x20-\x7E\u{0080}-\u{D7FF}\u{E000}-\u{10FFFF}]*")]
     Comment,
+    #[regex("#_", parse_discard)]
+    Discard,
     Error,
 }
+
+// const ALLOWED_CHARS: [char;13] = ['.', '*', '+', '!', '-', '_', '?', '$', '%', '&', '=', '<', '>'];
+// const ALLOWED_FIRST_CHARS: [char;3] = ['.', '+', '-'];
 
 fn parse_string(lexer: &mut Lexer<'_, Token>) -> Result<(), LexerError> {
     let mut it = lexer.remainder().chars();
@@ -104,6 +119,22 @@ fn parse_string(lexer: &mut Lexer<'_, Token>) -> Result<(), LexerError> {
         }
     }
     Err(LexerError::UnterminatedString)
+}
+
+fn parse_discard(lexer: &mut Lexer<'_, Token>) -> Result<(), LexerError> {
+    let mut it = lexer.remainder().chars().peekable();
+    while let Some(c) = it.peek() {
+        match c {
+            ' ' | '\n' | '\r' => {
+                return Ok(());
+            }
+            c => {
+                lexer.bump(c.len_utf8());
+            }
+        }
+        it.next();
+    }
+    Err(LexerError::UnterminatedDiscard)
 }
 
 fn check_string(value: &str, span: &Span, diags: &mut Vec<Diagnostic>) {

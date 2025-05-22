@@ -1,0 +1,28 @@
+---
+source: tests/mod.rs
+expression: "edn_parse(\"[1 #_nil true #_-4.2 #_\\\\c #_\\\"hello\\\" \\\"hello world\\\"]\").unwrap().cst"
+---
+edn [0..50]
+    vector [0..50]
+        LBrak "[" [0..1]
+        literal [1..2]
+            Number "1" [1..2]
+        Whitespace " " [2..3]
+        composed [3..8]
+            Discard "#_nil" [3..8]
+        Whitespace " " [8..9]
+        literal [9..13]
+            True "true" [9..13]
+        Whitespace " " [13..14]
+        composed [14..20]
+            Discard "#_-4.2" [14..20]
+        Whitespace " " [20..21]
+        composed [21..25]
+            Discard "#_\\c" [21..25]
+        Whitespace " " [25..26]
+        composed [26..35]
+            Discard "#_\"hello\"" [26..35]
+        Whitespace " " [35..36]
+        literal [36..49]
+            String "\"hello world\"" [36..49]
+        RBrak "]" [49..50]

@@ -4,6 +4,4 @@ expression: "edn_parse(\"\\\\tab\").unwrap().cst"
 ---
 edn [0..4]
     literal [0..4]
-        char [0..4]
-            CharEscape "\\" [0..1]
-            Chars "tab" [1..4]
+        Chars "\\tab" [0..4]
